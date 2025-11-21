@@ -1,0 +1,9 @@
+- This project depends on the [Service.Abstraction, Domain] projects.
+- This peoject is securely isolated (NO other project depend on it).
+- This project contains the implementations for [Service.Abstraction] layer interfaces.
+- This layer can be subdivided into many folders if needed.
+- e.g. UserServices, ProductServices, etc.
+
+- This project also contains the [ServiceManager] class which is responsible for managing all services and accessing them.
+- The [ServiceManager] class implements the [IServiceManager] interface.
+- The [ServiceManager] class uses the lazy loading for best preformance.

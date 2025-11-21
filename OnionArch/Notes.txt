@@ -1,0 +1,24 @@
+- This is the startup project (the entry) for the application.
+- This project contains the [Program.cs] file which is responsible for configuring and starting the application.
+- this project depends (references) all other projects in order to be used in the dependincey injection.
+	- this includes [Repository, Services] Interfaces/Abstractions and their implementations at [Services, Persistant] layers.
+
+- [Program.cs] file:
+	- This file where we register all the services to their corresponding Interfaces needed for the application.
+	- This file where we register all the repositories to their corresponding Interfaces.
+	- This file is responsible for configuring the application services and middleware.
+	- This file is responsible for configuring the database connection string.
+	- This file is responsible for configuring the logging services.
+	- This file is responsible for configuring the exception handling middleware.
+	- This file is responsible for configuring the swagger middleware.
+	- This file is responsible for configuring the CORS policy.
+	- This file is responsible for configuring the authentication and authorization middleware.
+	- This file is responsible for seeding the database with initial data.]
+
+- This layer contains the [Middelware] folder:
+	- for configurations and custom middelware implementation for the application.
+- This layer contains the [Extensions] folder:
+	- for extension methods for the application.
+- This layer contains the [ActionFilters] folder:
+	- for custom action filters implementation for the application.
+- This layer contains the database connection string in the [appsettings.json] file (Enviroment Secrets for true protection).

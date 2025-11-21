@@ -1,0 +1,5 @@
+- This project contains the service layer interfaces for the application.
+- This project does NOT depend on any other project except (Shared), but outer projects can depend on this project such as (Services, Presentation).
+- This project has 1 folder by default (and can be extended with more) if needed.
+
+- This project contains the [IServiceManager] interface which is responsible for managing all service interfaces and accessing them.

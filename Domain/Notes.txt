@@ -1,0 +1,18 @@
+- This project has 3 folders by default (and can be extended with more)
+
+- This project does NOT depend on any other project except (Shared), but outter projects can depend on this project such as (Services, Persistant).
+	
+- [Entities Folder]
+	- This folder contains the business objects of the application. These are the core classes that represent the data and behavior of the application.
+	- Example: [`User`, `Product`, `Order`]
+	- These classes are the table/s representations in the database that may be translated to.
+- [Exceptions Folder]
+	- This folder contains custom exception classes that are specific to the application's domain.
+	- Example: [`UserNotFoundException`, `InvalidOrderException`]
+	- These exceptions help in handling errors in a way that is meaningful to the business logic.]
+	- This folder may also subdivide into more folders such as (UserExceptions, ProductExceptions, etc) if there are many exceptions.
+- [RepositoryInterfaces Folder]
+	- This folder contains interfaces that define the contract for data access operations.
+	- Example: [`IUserRepository`, `IProductRepository`, `IOrderRepository`]
+	- These interfaces abstract the data access layer, allowing for different implementations (e.g., in-memory, database, etc.) without changing the business logic.
+	- This folder may also subdivide into more folders such as (UserRepositories, ProductRepositories, etc) if there are many repository interfaces.

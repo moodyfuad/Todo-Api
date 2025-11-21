@@ -1,0 +1,9 @@
+this folder contains the response mappings
+from dtos to api response 
+which contains the response details such:
+1. status code.
+2. message.
+3. success state.
+4. data.
+5. pagination details.
+6. add more if needed.

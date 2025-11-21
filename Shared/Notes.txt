@@ -1,0 +1,4 @@
+- This layer contains the shared classes for the application such as (enums, constants, etc...).
+- This layer does NOT depend on any project but all can depend on it.
+- This layer classes manily used at [Services, Service.Abstraction, Presentation] layers.
+- This layer contains the [Dtos] folder which contains all the Data Transfer Objects for the application.

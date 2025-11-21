@@ -1,0 +1,6 @@
+@OnionArch_HostAddress = http://localhost:5084
+
+GET {{OnionArch_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

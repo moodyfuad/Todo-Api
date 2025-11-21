@@ -1,0 +1,4 @@
+in this folder we implement the mapping logic 
+between the Entities and Dtos.
+
+because this layer has a reference of the domain which contains the Entities, and the shared which contains the dtos

@@ -1,0 +1,26 @@
+- This project depends on the [Domain] project only.
+	- To access the repository interfaces.
+	- To access the entity classes.
+	- To access the custom exceptions classes.
+- This project is securely isolated (NO other project depend on it) so its implementation is protected.
+- This project contains the implementations for the repository interfaces which defined at [Domine] layer.
+
+- [Configuration] folder:
+	- This folder contains the entity configurations classes.
+	- e.g. UserConfiguration, ProductConfiguration, etc.
+	- Each configuration class implements the IEntityTypeConfiguration<T> interface from the EF Core.
+	- Each configuration class is responsible for configuring its corresponding entity from the [Domain] layer.
+
+- [Repositories] folder:
+	- This folder contains the implementation of each repository interface.
+	- e.g. UserRepository, ProductRepository, etc.
+	- Each repository class implements its corresponding interface from the [Domain] layer.
+	- The [RepositoryManager] class implements the [IRepositoryManager] interface.
+	- This folder contains the [RepositoryManager] class which is responsible for managing all repository interfaces and accessing them.
+	- The [RepositoryManager] class uses the lazy loading for best preformance.]
+
+- [Migrations] folder:
+	- This folder contains the EF Core migrations files.
+	- Each migration file is responsible for applying the changes to the database schema.
+
+- This project contains the [RepositoryDbContext] class which is responsible for the database connection and enities resjestration.

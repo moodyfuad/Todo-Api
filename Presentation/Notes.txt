@@ -1,0 +1,4 @@
+- This project contains the [Controllers] folder which contains all the API controllers for the application.]
+	- this folder can be subdivided into many folders if needed.
+- This project depends only on the [Service.Abstraction] project layer.
+- This project contains [AssemblyReference] class which is used in the [API] layer for in order to use the controller from other project.
