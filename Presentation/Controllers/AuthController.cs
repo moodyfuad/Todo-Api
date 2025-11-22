@@ -21,27 +21,19 @@ namespace Presentation.Controllers
             this.services = services;
         }
 
-        [HttpPost("/Login")]
+        [HttpPost("Login")]
 
-        public async Task<ApiResponse<string>> LogIn(string username, string password)
+        public async Task<ApiResponse<TokenResultDto>> LogIn(LoginRequestDto dto)
         {
-            string result = await services.Auth.LogIn(username, password);
-            if (string.IsNullOrEmpty( result))
-            {
-                return ApiResponse<string>.Fail();
-            }
-            return ApiResponse<string>.Success(result);
+            TokenResultDto result = await services.Auth.LogIn(dto);
+            
+            return ApiResponse<TokenResultDto>.Success(result);
         }
-        [HttpPost("/Register")]
-
-        public async Task<ApiResponse<string>> Register(string name, string emial, string password)
+        [HttpPost("refresh-token")]
+        public async Task<ApiResponse<TokenResultDto>> RefreshToken(RefreshTokenRequestDto dto)
         {
-            var result = await services.Auth.RegisterAsync(emial, password, name);
-            if (!result.Success)
-            {
-                return ApiResponse<string>.Fail(errors:result.Errors);
-            }
-            return ApiResponse<string>.Success();
+            var result = await services.Auth.RefreshToken(dto);
+            return ApiResponse<TokenResultDto>.Success(result);
         }
     }
 }

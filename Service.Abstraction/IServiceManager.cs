@@ -10,5 +10,9 @@ namespace Service.Abstraction
     {
         IAuth Auth{ get; }
         IPersonServices PersonServices { get; }
+        IPersonGroupServices PersonGroupServices { get; }
+        ITaskServices TaskServices { get; }
+        INoteServices NoteServices { get; }
+        IJwtService JwtService{ get; }
     }
 }

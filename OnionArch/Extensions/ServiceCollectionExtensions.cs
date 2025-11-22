@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Persistant;
 using Persistant.Identity;
 using Persistant.Repositories;
 using Service.Abstraction;
 using Services;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Services.JwtServices;
+using Shared.Helpers;
+using System.Text;
 
 namespace API.Extensions
 {
@@ -41,23 +42,25 @@ namespace API.Extensions
             options.UseSqlServer(connectionString)
             );
 
-            // adding the identity tables to the database.
-            services.AddIdentity<AppUser, IdentityRole<Guid>>(op =>
-            {
-                op.Password.RequiredLength = 4;
-                op.Password.RequireDigit = false;
-                op.Password.RequireNonAlphanumeric = false;
-                op.Password.RequiredUniqueChars = 0;
-                op.Password.RequireUppercase = false;
-            }).
-                AddEntityFrameworkStores<RepositoryDbContext>().
-                AddDefaultTokenProviders();
+            //todo: adding the identity tables to the database.
+            //services.AddIdentity<AppUser, IdentityRole<Guid>>(op =>
+            //{
+            //    op.Password.RequiredLength = 4;
+            //    op.Password.RequireDigit = false;
+            //    op.Password.RequireNonAlphanumeric = false;
+            //    op.Password.RequiredUniqueChars = 0;
+            //    op.Password.RequireUppercase = false;
+            //}).
+            //    AddEntityFrameworkStores<RepositoryDbContext>().
+            //    AddDefaultTokenProviders();
 
             return services;
         }
         private static IServiceCollection AddJwtConfigurations(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("JwtSettings");
+            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+            services.AddScoped<IJwtService, JwtService>();
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,13 +73,12 @@ namespace API.Extensions
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("Key").Value))
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
                 };
             });
-
-            services.AddSingleton<JwtHander>();
+            services.AddAuthorization();
 
             return services;
         }

@@ -40,7 +40,13 @@ namespace API.Middleware
             object? errors = null;
 
             // Remove the switch statement to avoid CS0136 and CS0163
-            if (exception is ApiException apiEx)
+            if (exception is EntityNotFoundException e)
+            {
+                statusCode = e.StatusCode;
+                title = e.Message;
+                errors = e.Errors;
+            }
+            else if (exception is ApiException apiEx)
             {
                 statusCode = apiEx.StatusCode;
                 title = apiEx.Message;
@@ -66,7 +72,7 @@ namespace API.Middleware
             var payload = ApiResponse<object>.Fail(message: title, errors: new
             {
                 traceId,
-                details = _env.IsDevelopment() ? exception.ToString() : null,
+                details = _env.IsDevelopment() ? exception.ToString() : errors,
                 extra = errors,
             });
 

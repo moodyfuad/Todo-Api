@@ -39,9 +39,12 @@ namespace Services.JwtServices
         private List<Claim> GetClaims(Person person) {
             List<Claim> claims = [];
 
+            foreach (var role in person.Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+            }
             claims.AddRange(
-                new Claim(ClaimTypes.Role, person.Role),
-                new Claim(ClaimTypes.Name, person.Name)
+                new Claim(ClaimTypes.Name, person.Username)
                 // Add more if needed
                 );
 

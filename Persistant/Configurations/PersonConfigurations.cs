@@ -12,7 +12,8 @@ namespace Persistant.Configurations
     internal sealed class PersonConfigurations : IEntityTypeConfiguration<Person>
     {
         public void Configure(EntityTypeBuilder<Person> builder) {
-            builder.Property(person => person.Name). HasMaxLength(60);
+            //builder.
+            builder.HasIndex(person => person.Username).IsUnique();
         }
     }
 }

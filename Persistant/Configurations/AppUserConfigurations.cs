@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Persistant.Configurations
 {
-    internal class AppUserConfigurations : IEntityTypeConfiguration<AppUser>
-    {
-        public void Configure(EntityTypeBuilder<AppUser> builder)
-        {
-            builder.HasKey(x => x.Id);
-        }
-    }
+    //internal class AppUserConfigurations : IEntityTypeConfiguration<AppUser>
+    //{
+    //    public void Configure(EntityTypeBuilder<AppUser> builder)
+    //    {
+    //        builder.HasKey(x => x.Id);
+    //    }
+    //}
 }

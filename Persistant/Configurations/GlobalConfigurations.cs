@@ -14,9 +14,7 @@ namespace Persistant.Configurations
     internal sealed class GlobalConfigurations : IEntityTypeConfiguration<BaseEntity>
     {
         public void Configure(EntityTypeBuilder<BaseEntity> builder)
-        {
-            //builder.HasKey(x => x.Id);
-            
+        {            
         }
     }
 }

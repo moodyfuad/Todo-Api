@@ -13,25 +13,52 @@ namespace Services
     public class Auth : IAuth
     {
         private readonly IRepositoryManager _repos;
-        private readonly JwtHander _jwtHander;
+        private readonly IJwtService _JwtService;
 
-        public Auth(IRepositoryManager repos, JwtHander jwtHander)
+        public Auth(IRepositoryManager repos, IJwtService jwtService)
         {
             _repos = repos;
-            _jwtHander = jwtHander;
+            _JwtService = jwtService;
         }
 
-        public async Task<string> LogIn(string username, string password)
+        public async Task<TokenResultDto> LogIn(LoginRequestDto dto)
         {
-            bool exist = await _repos.AppUserRepository.CheckUserCredentails(username, password);
-            if (!exist) return null;
-            var person = new Person() {Name = username,Role = "Admin" };
-            return _jwtHander.CreateToken(person);
+            try
+            {
+                var user = await _repos.GetGenericRepository<Person>().FindAsync(
+                    u => u.Username == dto.Username && u.Password == dto.Password,
+                    trackChanges: true
+                    );
+                TokenResultDto tokenResult = new()
+                {
+                    AccessToken = _JwtService.GenerateAccessToken(user.Id, user.Username, user.Roles.Select(r => r.ToString()).ToList()),
+                    RefreshToken = _JwtService.GenerateRefreshToken()
+                };
+                user.RefreshToken = tokenResult.RefreshToken;
+                await _repos.UnitOfWork.SaveChangesAsync();
+                return tokenResult;
+
+            }
+            catch (Exception _)
+            {
+                throw new UnauthorizedAccessException("Invalid username or password.");
+            }; 
         }
 
-        public async Task<RegisterResponseDto> RegisterAsync(string email, string password, string name)
+        public async Task<TokenResultDto> RefreshToken(RefreshTokenRequestDto dto)
         {
-           return await _repos.AppUserRepository.RegisterAsync(email, password, name);
+            var user = await _repos.GetGenericRepository<Person>().FindAsync(
+                   u => u.RefreshToken == dto.RefreshToken,
+                   trackChanges: true);
+            TokenResultDto tokenResult = new()
+            {
+                AccessToken = _JwtService.GenerateAccessToken(user.Id, user.Username, user.Roles.Select(r => r.ToString()).ToList()),
+                RefreshToken = _JwtService.GenerateRefreshToken()
+            };
+            user.RefreshToken = tokenResult.RefreshToken;
+            await _repos.UnitOfWork.SaveChangesAsync();
+
+            return tokenResult;
         }
     }
 }

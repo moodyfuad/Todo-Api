@@ -7,8 +7,8 @@ namespace Service.Abstraction
 {
     public interface IAuth
     {
-        Task<string> LogIn(string username, string password);
-        Task<RegisterResponseDto> RegisterAsync(string email, string password, string name);
+        Task<TokenResultDto> LogIn(LoginRequestDto dto);
+        Task<TokenResultDto> RefreshToken(RefreshTokenRequestDto dto);
 
     }
 }
